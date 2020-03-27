@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/graph-gophers/graphql-go/internal/schema"
+	"github.com/weave-lab/graphql-go/internal/schema"
 )
 
 func TestParse(t *testing.T) {

@@ -1,4 +1,4 @@
-module github.com/graph-gophers/graphql-go
+module github.com/weave-lab/graphql-go
 
 require (
 	github.com/opentracing/opentracing-go v1.1.0
@@ -7,4 +7,4 @@ require (
 
 go 1.13
 
-replace github.com/graph-gophers/graphql-go => github.com/weave-lab/graphql-go v0.0.0-20200309224638-dae41bde9ef9
+replace github.com/weave-lab/graphql-go => github.com/weave-lab/graphql-go v0.0.0-20200309224638-dae41bde9ef9

@@ -3,10 +3,10 @@ package graphql
 import (
 	"fmt"
 
-	"github.com/graph-gophers/graphql-go/errors"
-	"github.com/graph-gophers/graphql-go/internal/common"
-	"github.com/graph-gophers/graphql-go/internal/query"
-	"github.com/graph-gophers/graphql-go/internal/validation"
+	"github.com/weave-lab/graphql-go/errors"
+	"github.com/weave-lab/graphql-go/internal/common"
+	"github.com/weave-lab/graphql-go/internal/query"
+	"github.com/weave-lab/graphql-go/internal/validation"
 )
 
 // LoggedOperation represents a summary of an operation suitable for concise
