@@ -18,6 +18,10 @@ import (
 	"github.com/weave-lab/graphql-go/trace"
 )
 
+const (
+	CurrentFieldKey = "current_field"
+)
+
 type Request struct {
 	selected.Request
 	Limiter chan struct{}
@@ -168,6 +172,7 @@ func execFieldSelection(ctx context.Context, r *Request, s *resolvable.Schema, f
 	var result reflect.Value
 	var err *errors.QueryError
 
+	ctx = context.WithValue(ctx, CurrentFieldKey, f.field)
 	traceCtx, finish := r.Tracer.TraceField(ctx, f.field.TraceLabel, f.field.TypeName, f.field.Name, !f.field.Async, f.field.Args)
 	defer func() {
 		finish(err)

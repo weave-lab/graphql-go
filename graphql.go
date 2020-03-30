@@ -19,6 +19,11 @@ import (
 	"github.com/weave-lab/graphql-go/trace"
 )
 
+const (
+	DocumentKey = "document"
+	FieldKey    = exec.CurrentFieldKey
+)
+
 // ParseSchema parses a GraphQL schema and attaches the given root resolver. It returns an error if
 // the Go type signature of the resolvers does not match the schema. If nil is passed as the
 // resolver, then the schema can not be executed, but it may be inspected (e.g. with ToJSON).
@@ -176,6 +181,8 @@ func (s *Schema) exec(ctx context.Context, queryString string, operationName str
 	if len(errs) != 0 {
 		return &Response{Errors: errs}
 	}
+
+	ctx = context.WithValue(ctx, DocumentKey, doc)
 
 	op, err := getOperation(doc, operationName)
 	if err != nil {
