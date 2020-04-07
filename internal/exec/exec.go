@@ -8,14 +8,18 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/graph-gophers/graphql-go/errors"
-	"github.com/graph-gophers/graphql-go/internal/common"
-	"github.com/graph-gophers/graphql-go/internal/exec/resolvable"
-	"github.com/graph-gophers/graphql-go/internal/exec/selected"
-	"github.com/graph-gophers/graphql-go/internal/query"
-	"github.com/graph-gophers/graphql-go/internal/schema"
-	"github.com/graph-gophers/graphql-go/log"
-	"github.com/graph-gophers/graphql-go/trace"
+	"github.com/weave-lab/graphql-go/errors"
+	"github.com/weave-lab/graphql-go/internal/common"
+	"github.com/weave-lab/graphql-go/internal/exec/resolvable"
+	"github.com/weave-lab/graphql-go/internal/exec/selected"
+	"github.com/weave-lab/graphql-go/internal/query"
+	"github.com/weave-lab/graphql-go/internal/schema"
+	"github.com/weave-lab/graphql-go/log"
+	"github.com/weave-lab/graphql-go/trace"
+)
+
+const (
+	CurrentFieldKey = "current_field"
 )
 
 type Request struct {
@@ -168,6 +172,7 @@ func execFieldSelection(ctx context.Context, r *Request, s *resolvable.Schema, f
 	var result reflect.Value
 	var err *errors.QueryError
 
+	ctx = context.WithValue(ctx, CurrentFieldKey, f.field)
 	traceCtx, finish := r.Tracer.TraceField(ctx, f.field.TraceLabel, f.field.TypeName, f.field.Name, !f.field.Async, f.field.Args)
 	defer func() {
 		finish(err)

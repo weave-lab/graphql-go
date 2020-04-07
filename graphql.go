@@ -6,17 +6,22 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/graph-gophers/graphql-go/errors"
-	"github.com/graph-gophers/graphql-go/internal/common"
-	"github.com/graph-gophers/graphql-go/internal/exec"
-	"github.com/graph-gophers/graphql-go/internal/exec/resolvable"
-	"github.com/graph-gophers/graphql-go/internal/exec/selected"
-	"github.com/graph-gophers/graphql-go/internal/query"
-	"github.com/graph-gophers/graphql-go/internal/schema"
-	"github.com/graph-gophers/graphql-go/internal/validation"
-	"github.com/graph-gophers/graphql-go/introspection"
-	"github.com/graph-gophers/graphql-go/log"
-	"github.com/graph-gophers/graphql-go/trace"
+	"github.com/weave-lab/graphql-go/errors"
+	"github.com/weave-lab/graphql-go/internal/common"
+	"github.com/weave-lab/graphql-go/internal/exec"
+	"github.com/weave-lab/graphql-go/internal/exec/resolvable"
+	"github.com/weave-lab/graphql-go/internal/exec/selected"
+	"github.com/weave-lab/graphql-go/internal/query"
+	"github.com/weave-lab/graphql-go/internal/schema"
+	"github.com/weave-lab/graphql-go/internal/validation"
+	"github.com/weave-lab/graphql-go/introspection"
+	"github.com/weave-lab/graphql-go/log"
+	"github.com/weave-lab/graphql-go/trace"
+)
+
+const (
+	DocumentKey = "document"
+	FieldKey    = exec.CurrentFieldKey
 )
 
 // ParseSchema parses a GraphQL schema and attaches the given root resolver. It returns an error if
@@ -176,6 +181,8 @@ func (s *Schema) exec(ctx context.Context, queryString string, operationName str
 	if len(errs) != 0 {
 		return &Response{Errors: errs}
 	}
+
+	ctx = context.WithValue(ctx, DocumentKey, doc)
 
 	op, err := getOperation(doc, operationName)
 	if err != nil {
