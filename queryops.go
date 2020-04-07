@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	FieldSeparator = "."
+	FieldSeparator = "_"
 )
 
 // QueryOp represents a summary of query's requested operations
